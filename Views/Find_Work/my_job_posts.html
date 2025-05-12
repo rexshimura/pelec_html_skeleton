@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Proposals - INHIRE</title>
-    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <title>My Job Posts - INHIRE</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,7 +63,7 @@
             color: #2c3e50;
             margin-bottom: 1.5rem;
         }
-        .proposal-section {
+        .job-post-section {
             background-color: #fff;
             border: 1px solid #e0e0e0;
             border-radius: 0.5rem;
@@ -71,12 +71,17 @@
             margin-bottom: 1rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        .proposal-title {
+        .job-post-title {
+            font-size: 1.1rem;
+            color: #34495e;
+            margin-bottom: 1.5rem;
+        }
+        .job-main-title {
             font-size: 1.1rem;
             color: #34495e;
             margin-bottom: 0.5rem;
         }
-        .proposal-count {
+        .job-post-count {
             font-size: 0.9rem;
             color: #666;
             margin-bottom: 1rem;
@@ -105,7 +110,7 @@
             margin-top: 1.5rem;
         }
 
-        .proposal-card {
+        .job-post-card {
             background-color: #fff;
             border: 1px solid #e0e0e0;
             border-radius: 0.5rem;
@@ -114,14 +119,44 @@
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
-        .proposal-card:hover {
+        .job-post-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .proposal-section p{
+        .job-post-section p{
             margin-bottom: 0;
         }
+        .btn-outline-primary {
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .job-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #547aaa; /* Yellow for In Progress */
+            color: #d6d9dc;
+            margin-bottom: 0.5rem;
+        }
+        .job-details-label {
+            font-weight: normal;
+            color: #868686;
+            margin-right: 0.25rem;
+        }
+        .pt{
+            margin-top: 2rem;
+        }
+
     </style>
 </head>
 <body>
@@ -140,8 +175,9 @@
                                 Find Work
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="findWorkDropdown">
-                                <li><a class="dropdown-item active" href="./home.html">Find Work</a></li>
-                                <li><a class="dropdown-item" href="./myproposals.html">My Proposals</a></li>
+                                <li><a class="dropdown-item" href="/Views/Find_Work/home.html">Find Work</a></li>
+                                <li><a class="dropdown-item" href="/Views/Find_Work/my_proposals.html">My Proposals</a></li>
+                                <li><a class="dropdown-item active" href="/Views/Find_Work/my_job_posts.html">My Job Posts</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -149,27 +185,22 @@
                                 Deliver Work
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="deliverWorkDropdown">
-                                <li><a class="dropdown-item" href="./activecontracts.html">Your Active Contracts</a></li>
-                                <li><a class="dropdown-item" href="#">Contract History</a></li>
+                                <li><a class="dropdown-item" href="/Views/Deliver_Work/active_contracts.html">Your Active Contracts</a></li>
+                                <li><a class="dropdown-item" href="/Views/Deliver_Work/contract_history.html">Contract History</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <form class="d-flex">
                                 <input class="form-control me-2" type="search" placeholder="Search for services" aria-label="Search">
-                                <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+                                <a href="/Views/Search/searched_result.html"><button class="btn btn-primary" type="button" id="button-addon2">Search</button></a>
                             </form>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-bell"></i>
-                            </a>
-                        </li> -->
                         <li class="nav-item">
-                            <a class="nav-link size" href="./profile.html">
+                            <a class="nav-link size" href="/Views/Profile/profile.html">
                                 <div class="user-info">
-                                    <img src="./icons/icon_profile.png" alt="User Avatar" class="avatar">
+                                    <img src="/icons/icon_profile.png" alt="User Avatar" class="avatar">
                                 </div>
                             </a>
                         </li>
@@ -181,47 +212,24 @@
 
     <main class="container py-4">
         <section class="mb-4">
-            <h2 class="section-title">My Proposals</h2>
-            <p class="lead">Manage your proposals and track their status.</p>
+            <h2 class="section-title">My Job Posts</h2>
+            <p class="lead">Manage your job posts.</p>
         </section>
 
-        <section class="mb-4">
-            <nav class="nav nav-tabs">
-                <a class="nav-link active" href="#active-proposals" data-bs-toggle="tab">Active</a>
-                <a class="nav-link" href="#archived-proposals" data-bs-toggle="tab">Archived</a>
-            </nav>
+        <section class="mb-4 text-center">
+            <a href="/Views/Job_Post/post_job.html" class="btn btn-outline-primary">+ Post a job</a>
+        </section>
 
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="active-proposals">
-                    <div class="proposal-section">
-                        <h3 class="proposal-title">Active Proposals</h3>
-                        <p class="proposal-count">Number of active proposals: 0</p>
-                        <div id="active-proposals-list">
-                            <div class="proposal-card">
-                                <p>This section will list your active proposals.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="proposal-section">
-                        <h3 class="proposal-title">Submitted Proposals</h3>
-                        <p class="proposal-count">Number of submitted proposals: 0</p>
-                         <div id="submitted-proposals-list">
-                            <div class="proposal-card">
-                                 <p>This section will list your submitted proposals.</p>
-                            </div>
-                         </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="archived-proposals">
-                    <div class="proposal-section">
-                        <h3 class="proposal-title">Archived Proposals</h3>
-                        <p class="proposal-count">Number of archived proposals: 0</p>
-                        <div id="archived-proposals-list">
-                            <div class="proposal-card">
-                                <p>This section will list your archived proposals.</p>
-                            </div>
-                        </div>
-                    </div>
+        <section class="job-post-section">
+            <h3 class="job-main-title">Your Job Posts</h3>
+            <p class="job-post-count">Number of job posts: 1</p>
+            <div id="job-posts-list">
+                <div class="job-post-card">
+                    <span class="job-tag" id="jobtype">Hourly</span> <span class="job-tag" id="jobrole">Developer</span>
+                    <h5>TITLE NI DIRI</h5>
+                    <h4 class="job-post-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <p><span class="job-details-label">Started:</span> Jan 16, 2025</p>
+                    <a href="/Views/Job_Post/view_post.html" class="btn btn-primary pt">See Job Post</a>
                 </div>
             </div>
         </section>
@@ -246,7 +254,7 @@
                 findWorkDropdown.removeAttribute('href');
                 deliverWorkDropdown.removeAttribute('href');
             }
-            // Set "Find Work" as active by default
+             // Set "Find Work" as active by default
             navbarNavItems.forEach(navItem => navItem.classList.remove('active'));
             const findWorkNavItem = Array.from(navbarNavItems).find(navItem => navItem.querySelector('#findWorkDropdown'));
             if (findWorkNavItem) {

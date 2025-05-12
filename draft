@@ -1,0 +1,11 @@
+<div id="header-container"></div>
+<main>
+
+</main>
+    <script>
+        fetch('/path/to/header.html') // Adjust the path to your header.html file
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
