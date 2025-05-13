@@ -229,6 +229,13 @@
                     <label for="noOfHires" class="form-label required-label">Number of Hires</label>
                     <input type="number" class="form-control" id="noOfHires" value="1" min="1" required>
                 </div>
+                <div class="col-md-6 mt-3">
+                    <label for="salary" class="form-label required-label">Salary</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₱</span>
+                        <input type="number" class="form-control" id="salary" placeholder="Enter salary amount" min="0" required>
+                    </div>
+                </div>
             </div>
             <a href="#" onclick="window.history.back();" class="btn btn-secondary">Return back</a>
             <button type="submit" class="btn btn-primary">Post Job</button>
