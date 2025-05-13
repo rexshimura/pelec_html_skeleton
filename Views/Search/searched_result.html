@@ -10,9 +10,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        html, body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            height: 14vh;
+            flex-shrink: 0;
+        }
+        
+        main {
+            height: 80vh;
+            flex-shrink: 0; 
+        }
+        
+        footer {
+            height: 5vh;
+            flex-shrink: 0;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f4f7f9;
+            height: 100vh;
         }
         .navbar-brand {
             font-weight: bold;
@@ -67,7 +91,13 @@
             font-size: 1.2rem;
             font-weight: normal;
             color: #2c3e50;
-            margin-bottom: 1.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-listings-container{
+            height: 75vh;
+            overflow:hidden;
+            overflow-y: scroll;
         }
         .job-card {
             background-color: #fff;
@@ -99,15 +129,37 @@
             font-size: 0.8rem;
             color: #7f8c8d;
         }
-        .filter-group {
-            margin-bottom: 1.5rem;
+        .filter-group { 
+                border-top: 1px solid rgba(207, 207, 207, 0.532); 
+                
         }
-        .filter-title {
+        .filter-title 
+        {
+            cursor: pointer;
+            user-select: none;
             font-size: 1rem;
             font-weight: bold;
             color: #34495e;
-            margin-bottom: 1rem;
+            margin-top: 0.3rem;
+            margin-bottom: 0.2rem;
+            padding: 0.5rem;
+            
+            
+        } 
+        
+         .filter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            
         }
+
+
+        .filter-group.active .filter-content {
+            max-height: 100%; 
+        }
+            
+        
         .form-select {
             border-radius: 0.5rem;
             border: 1px solid #e0e0e0;
@@ -121,7 +173,6 @@
         .job-summary {
             font-size: 0.8rem;
             color: #7f8c8d;
-            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -149,7 +200,6 @@
         .category-search-input {
             width: 100%;
             padding: 0.5rem;
-            margin-bottom: 0.5rem;
             border: 1px solid #ced4da;
             border-radius: 0.25rem;
             font-size: 0.9rem;
@@ -158,6 +208,7 @@
             max-height: 150px;
             overflow-y: auto;
             border: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
             border-radius: 0.25rem;
             padding: 0.5rem;
         }
@@ -189,6 +240,35 @@
             margin-bottom: 0.25rem;
             font-size: 0.9rem;
         }
+
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        /* Sidebar styling */
+        .sidebar-scroll {
+            height: 75vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        .sidebar-scroll {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+       
+        .container
+        {
+            margin-bottom: 0%;
+        }
+
     </style>
 </head>
 <body>
@@ -241,18 +321,24 @@
             </nav>
         </div>
     </header>
-
     <main class="container py-4">
-        <section class="mb-4">
-            <h1 class="section-title">Search Results</h1>
-            <span class="section-sub">for:</span><span> "pogi"</span>
-        </section>
 
-        <section class="mb-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="filter-group">
-                        <h2 class="filter-title">Sort By</h2>
+        <!-- Row: Sidebar + Job Listings -->
+        <div class="row mb-4 align-items-start">
+            
+            <!-- Sidebar -->
+            <div class="col-md-3 sidebar-scroll">
+                
+                <!-- Search Results Header -->
+                <section class="mb-4">
+                    <h1 class="section-title">Search Results</h1>
+                    <span class="section-sub">for:</span><span> "pogi"</span>
+                </section>
+    
+                <!-- Filter: Sort By -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Sort By</h2>
+                    <div class="filter-content">
                         <div class="mb-3">
                             <select id="sortBy" class="form-select">
                                 <option value="newest">Newest</option>
@@ -260,36 +346,52 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h2 class="filter-title">Category</h2>
+                </div>
+    
+                <!-- Filter: Category -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Category</h2>
+                    <div class="filter-content">
                         <input type="text" id="categorySearch" class="category-search-input" placeholder="Search category">
                         <div class="category-checkbox-group" id="categoryCheckboxes">
                             <label><input type="checkbox" value="development" name="category"> Development</label>
                             <label><input type="checkbox" value="design" name="category"> Design</label>
                             <label><input type="checkbox" value="writing" name="category"> Writing</label>
                             <label><input type="checkbox" value="marketing" name="category"> Marketing</label>
-                             <label><input type="checkbox" value="data analysis" name="category"> Data Analysis</label>
+                            <label><input type="checkbox" value="data analysis" name="category"> Data Analysis</label>
                             <label><input type="checkbox" value="management" name="category"> Management</label>
                         </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h2 class="filter-title">Job Type</h2>
-                        <div class="money-range-input-group">
-                            <input type="number" id="minBudget" class="form-control" placeholder="Min Budget">
-                            <input type="number" id="maxBudget" class="form-control" placeholder="Max Budget">
-                        </div>
+                </div>
+    
+                <!-- Filter: Job Type -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Job Type</h2>
+                    <div class="filter-content">
                         <div class="mb-3" id="jobTypeCheckboxes">
                             <label><input type="checkbox" value="hourly" name="type"> Hourly</label>
                             <label><input type="checkbox" value="fixed" name="type"> Fixed Price</label>
                             <label><input type="checkbox" value="fulltime" name="type"> Full-Time</label>
-                            <label><input type="checkbox" value="contract" name="type"> Contract</label>
+                            <label><input type="checkbox" value="contract" name="type"> Part-Time</label>
                         </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h2 class="filter-title">Experience Level</h2>
+                </div>
+    
+                <!-- Filter: Salary Range -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Salary Range</h2>
+                    <div class="filter-content">
+                        <div class="money-range-input-group">
+                            <input type="number" id="minBudget" class="form-control" placeholder="Min Budget">
+                            <input type="number" id="maxBudget" class="form-control" placeholder="Max Budget">
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Filter: Experience Level -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Experience Level</h2>
+                    <div class="filter-content">
                         <div class="mb-3">
                             <select id="experienceFilter" class="form-select">
                                 <option value="">All Levels</option>
@@ -299,9 +401,12 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h2 class="filter-title">Number of Proposals</h2>
+                </div>
+    
+                <!-- Filter: Number of Proposals -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Number of Proposals</h2>
+                    <div class="filter-content">
                         <div class="proposals-checkbox-group" id="proposalsCheckboxes">
                             <label><input type="checkbox" value="lessThan5" name="proposals"> Less than 5</label>
                             <label><input type="checkbox" value="5to10" name="proposals"> 5 - 10</label>
@@ -310,25 +415,34 @@
                             <label><input type="checkbox" value="20to50" name="proposals"> 20 - 50</label>
                         </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h2 class="filter-title">Client Info</h2>
+                </div>
+    
+                <!-- Filter: Client Info -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Client Info</h2>
+                    <div class="filter-content">
                         <div class="mb-3" id="clientInfoCheckboxes">
                             <label><input type="checkbox" value="previousClients" name="clientInfo"> My Previous Clients</label>
                         </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h2 class="filter-title">Client History</h2>
+                </div>
+    
+                <!-- Filter: Client History -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Client History</h2>
+                    <div class="filter-content">
                         <div class="client-history-radio-group" id="clientHistoryRadios">
                             <label><input type="radio" value="noHires" name="clientHistory"> No Hires</label>
                             <label><input type="radio" value="1to9Hires" name="clientHistory"> 1 - 9 Hires</label>
                             <label><input type="radio" value="10PlusHires" name="clientHistory"> 10+ Hires</label>
                         </div>
                     </div>
-
-                    <div class="filter-group">
-                        <h2 class="filter-title">Type of Work</h2>
+                </div>
+    
+                <!-- Filter: Type of Work -->
+                <div class="filter-group">
+                    <h2 class="filter-title toggle-filter">Type of Work</h2>
+                    <div class="filter-content">
                         <div class="type-of-work-radio-group" id="workTypeRadios">
                             <label><input type="radio" value="" name="workType" checked> Any Type of Work</label>
                             <label><input type="radio" value="developmentIT" name="workType"> Development IT</label>
@@ -341,18 +455,25 @@
                             <label><input type="radio" value="writingTranslation" name="workType"> Writing & Translation</label>
                         </div>
                     </div>
-
-                </div>
-                <div class="col-md-9" id="job-listings-container">
                 </div>
             </div>
-            <div id="no-results" style="display: none; text-align: center; margin-top: 20px;">
-                <p class="lead">No jobs found matching your search criteria.</p>
+    
+            <!-- Job Listings -->
+            <div class="col-md-9">
+                <div id="job-listings-container" class="job-listings-container">
+                    <!-- Jobs go here -->
+                </div>
+    
+                <div id="no-results" style="display: none; text-align: center; margin-top: 20px;">
+                    <p class="lead">No jobs found matching your search criteria.</p>
+                </div>
             </div>
-        </section>
+        </div>
+    
     </main>
+  
 
-    <footer class="bg-light py-3 border-top">
+    <footer class="bg-light py-3 border-top fixed-bottom">
         <div class="container text-center">
             <p>&copy; 2025 INHIRE. All rights reserved.</p>
         </div>
@@ -360,6 +481,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+   
+
     <script>
         const jobData = [
             {
@@ -371,7 +494,8 @@
                 category: 'development',
                 type: 'hourly',
                 experience: 'intermediate',
-                budget: 2500,
+                hourlyRateMin: 20,
+                hourlyRateMax: 35,
                 proposals: 8,
                 clientHistory: '1to9Hires',
                 workType: 'developmentIT'
@@ -385,7 +509,7 @@
                 category: 'design',
                 type: 'fixed',
                 experience: 'entry',
-                 budget: 1500,
+                fixedSalary: 1500,
                 proposals: 3,
                 clientHistory: 'noHires',
                 workType: 'designCreative'
@@ -394,15 +518,58 @@
                 title: 'Data Analyst',
                 postedBy: 'John Doe',
                 tags: ['Full-time', 'Data Analysis', 'SQL'],
-                description: 'Analyze sales data and create reports to improve business decisions.  Experience with SQL and Python required.',
+                description: 'Analyze sales data and create reports to improve business decisions.',
                 posted: '1 day ago',
                 category: 'data analysis',
                 type: 'fulltime',
                 experience: 'expert',
-                 budget: 4000,
+                fixedSalary: 4000,
                 proposals: 12,
-                 clientHistory: '10PlusHires',
-                  workType: 'financeAccounting'
+                clientHistory: '10PlusHires',
+                workType: 'financeAccounting'
+            },
+            {
+                title: 'Technical Writer',
+                postedBy: 'Robert Brown',
+                tags: ['Hourly', 'Technical Writing'],
+                description: 'We are looking for a technical writer to create documentation.',
+                posted: '1 week ago',
+                category: 'writing',
+                type: 'hourly',
+                experience: 'intermediate',
+                hourlyRateMin: 18,
+                hourlyRateMax: 30,
+                proposals: 2,
+                clientHistory: 'noHires',
+                workType: 'writingTranslation'
+            },
+            {
+                title: 'Graphic Designer',
+                postedBy: 'Jane Smith',
+                tags: ['Fixed Price', 'Creative'],
+                description: 'We need a creative graphic designer to design a new logo and marketing materials.',
+                posted: '1 week ago',
+                category: 'design',
+                type: 'fixed',
+                experience: 'entry',
+                fixedSalary: 1500,
+                proposals: 3,
+                clientHistory: 'noHires',
+                workType: 'designCreative'
+            },
+            {
+                title: 'Data Analyst',
+                postedBy: 'John Doe',
+                tags: ['Full-time', 'Data Analysis', 'SQL'],
+                description: 'Analyze sales data and create reports to improve business decisions. Experience with SQL and Python required.',
+                posted: '1 day ago',
+                category: 'data analysis',
+                type: 'fulltime',
+                experience: 'expert',
+                fixedSalary: 4000,
+                proposals: 12,
+                clientHistory: '10PlusHires',
+                workType: 'financeAccounting'
             },
             {
                 title: 'Full Stack Developer',
@@ -413,21 +580,21 @@
                 category: 'development',
                 type: 'contract',
                 experience: 'intermediate',
-                 budget: 3000,
+                fixedSalary: 3000,
                 proposals: 6,
-                 clientHistory: '1to9Hires',
-                  workType: 'developmentIT'
+                clientHistory: '1to9Hires',
+                workType: 'developmentIT'
             },
             {
                 title: 'Project Manager',
                 postedBy: 'Samantha White',
                 tags: ['Full-time', 'Agile', 'Project Management'],
-                description: 'Manage the development and launch of a new mobile application.  Agile experience is a plus.',
+                description: 'Manage the development and launch of a new mobile application. Agile experience is a plus.',
                 posted: '5 days ago',
                 category: 'management',
                 type: 'fulltime',
                 experience: 'expert',
-                 budget: 5000,
+                fixedSalary: 5000,
                 proposals: 18,
                 clientHistory: '10PlusHires',
                 workType: 'management'
@@ -441,12 +608,13 @@
                 category: 'writing',
                 type: 'hourly',
                 experience: 'intermediate',
-                 budget: 2000,
+                hourlyRateMin: 20,
+                hourlyRateMax: 35,
                 proposals: 2,
                 clientHistory: 'noHires',
                 workType: 'writingTranslation'
             },
-             {
+            {
                 title: 'Web Designer',
                 postedBy: 'Emily Green',
                 tags: ['Contract', 'UI/UX', 'Design'],
@@ -455,7 +623,7 @@
                 category: 'design',
                 type: 'contract',
                 experience: 'intermediate',
-                budget: 2700,
+                fixedSalary: 2700,
                 proposals: 9,
                 clientHistory: '1to9Hires',
                 workType: 'designCreative'
@@ -469,7 +637,7 @@
                 category: 'marketing',
                 type: 'fulltime',
                 experience: 'entry',
-                budget: 3200,
+                fixedSalary: 3200,
                 proposals: 14,
                 clientHistory: '10PlusHires',
                 workType: 'salesMarketing'
@@ -483,7 +651,8 @@
                 category: 'finance',
                 type: 'hourly',
                 experience: 'expert',
-                budget: 3800,
+                hourlyRateMin: 30,
+                hourlyRateMax: 55,
                 proposals: 25,
                 clientHistory: '10PlusHires',
                 workType: 'financeAccounting'
@@ -497,13 +666,14 @@
                 category: 'customer support',
                 type: 'fulltime',
                 experience: 'entry',
-                budget: 2200,
+                fixedSalary: 2200,
                 proposals: 4,
                 clientHistory: 'noHires',
                 workType: 'adminCustomerSupport'
             }
+            
         ];
-
+    
         document.addEventListener('DOMContentLoaded', () => {
             const sortBySelect = document.getElementById('sortBy');
             const categorySearchInput = document.getElementById('categorySearch');
@@ -515,170 +685,137 @@
             const minBudgetInput = document.getElementById('minBudget');
             const maxBudgetInput = document.getElementById('maxBudget');
             const proposalsCheckboxes = document.querySelectorAll('input[name="proposals"]');
-            const clientInfoCheckboxes = document.querySelectorAll('input[name="clientInfo"]');
             const clientHistoryRadios = document.querySelectorAll('input[name="clientHistory"]');
-             const workTypeRadios = document.querySelectorAll('input[name="workType"]');
-
-
-            let filteredJobs = [...jobData];
+            const workTypeRadios = document.querySelectorAll('input[name="workType"]');
+    
             let selectedCategories = new Set();
             let selectedTypes = new Set();
             let selectedProposals = new Set();
-            let selectedClientInfo = new Set();
             let selectedClientHistory = '';
             let selectedWorkType = '';
-
-
-            categoryCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', (event) => {
-                    if (event.target.checked) {
-                        selectedCategories.add(event.target.value);
-                    } else {
-                        selectedCategories.delete(event.target.value);
-                    }
-                    displayJobs();
-                });
-            });
-
-            jobTypeCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', (event) => {
-                    if (event.target.checked) {
-                        selectedTypes.add(event.target.value);
-                    } else {
-                        selectedTypes.delete(event.target.value);
-                    }
-                    displayJobs();
-                });
-            });
-
-            proposalsCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', (event) => {
-                    if (event.target.checked) {
-                        selectedProposals.add(event.target.value);
-                    } else {
-                        selectedProposals.delete(event.target.value);
-                    }
-                    displayJobs();
-                });
-            });
-
-            clientInfoCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', (event) => {
-                    if (event.target.checked) {
-                        selectedClientInfo.add(event.target.value);
-                    } else {
-                        selectedClientInfo.delete(event.target.value);
-                    }
-                    displayJobs();
-                });
-            });
-
-            clientHistoryRadios.forEach(radio => {
-                radio.addEventListener('change', (event) => {
-                    selectedClientHistory = event.target.value;displayJobs();
-                });
-            });
-            
-            workTypeRadios.forEach(radio => {
-                radio.addEventListener('change', (event) => {
-                    selectedWorkType = event.target.value;
-                    displayJobs();
-                });
-            });
-
-
-            categorySearchInput.addEventListener('input', () => {
-                const searchTerm = categorySearchInput.value.toLowerCase();
-                const categoryLabels = document.querySelectorAll('.category-checkbox-group label');
-                categoryLabels.forEach(label => {
-                    const categoryName = label.textContent.toLowerCase();
-                    const checkbox = label.querySelector('input');
-                    if (categoryName.includes(searchTerm)) {
-                        label.style.display = 'block';
-                        checkbox.style.display = 'inline-block';
-                    } else {
-                        label.style.display = 'none';
-                        checkbox.style.display = 'none';
-                    }
-                });
-            });
-
-            sortBySelect.addEventListener('change', displayJobs);
-            experienceFilter.addEventListener('change', displayJobs);
-            minBudgetInput.addEventListener('input', displayJobs);
-            maxBudgetInput.addEventListener('input', displayJobs);
-
-
+    
+            function postSalary(job) {
+                if (job.type === 'fixed' || job.type === 'fulltime' || job.type === 'contract') {
+                    return `<div class="job-salary" style="font-weight: bold; margin: 6px 0; color: #1a202c;">Salary: $${job.fixedSalary}</div>`;
+                } else if (job.type === 'hourly') {
+                    return `<div class="job-salary" style="font-weight: bold; margin: 6px 0; color: #1a202c;">Rate: $${job.hourlyRateMin}–$${job.hourlyRateMax} / hr</div>`;
+                }
+                return '';
+            }
+    
             function createJobCard(job) {
                 const card = document.createElement('div');
                 card.className = 'job-card';
-
                 card.innerHTML = `
                     <h3 class="job-title">${job.title}</h3>
-                    <div class="job-summary">
-                        Posted By: ${job.postedBy}
-                    </div>
-                    <div class="job-summary">
-                        Tags: ${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
+                    <div class="job-summary">Posted By: ${job.postedBy}</div>
+                    ${postSalary(job)}
+                    <div class="job-summary">Tags: ${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
                     <p class="job-description">${job.description}</p>
-                    <div class="job-details">
-                        Posted: ${job.posted}
-                    </div>
+                    <div class="job-details">Posted: ${job.posted}</div>
                     <a href="/Views/Job_Post/view_otherpost.html"><button class="btn btn-primary view-more-button">View More</button></a>
                 `;
-
                 return card;
             }
-
+    
             function displayJobs() {
                 const selectedSort = sortBySelect.value;
                 const selectedExperience = experienceFilter.value;
                 const minBudget = minBudgetInput.value ? parseFloat(minBudgetInput.value) : 0;
                 const maxBudget = maxBudgetInput.value ? parseFloat(maxBudgetInput.value) : Infinity;
-
-
-                filteredJobs = jobData.filter(job => {
+    
+                const filtered = jobData.filter(job => {
                     const categoryMatch = selectedCategories.size === 0 || selectedCategories.has(job.category);
                     const typeMatch = selectedTypes.size === 0 || selectedTypes.has(job.type);
                     const experienceMatch = !selectedExperience || job.experience === selectedExperience;
-                    const budgetMatch = job.budget >= minBudget && job.budget <= maxBudget;
-                    
+    
+                    let salaryMatch = true;
+                    if (job.type === 'hourly' && job.hourlyRateMin != null && job.hourlyRateMax != null) {
+                        salaryMatch = job.hourlyRateMax >= minBudget && job.hourlyRateMin <= maxBudget;
+                    } else if (job.fixedSalary != null) {
+                        salaryMatch = job.fixedSalary >= minBudget && job.fixedSalary <= maxBudget;
+                    }
+    
                     const proposalsMatch = selectedProposals.size === 0 ||
                         (selectedProposals.has('lessThan5') && job.proposals < 5) ||
                         (selectedProposals.has('5to10') && job.proposals >= 5 && job.proposals <= 10) ||
                         (selectedProposals.has('10to15') && job.proposals >= 10 && job.proposals <= 15) ||
                         (selectedProposals.has('15to20') && job.proposals >= 15 && job.proposals <= 20) ||
                         (selectedProposals.has('20to50') && job.proposals >= 20 && job.proposals <= 50);
-
-                    const clientInfoMatch = selectedClientInfo.size === 0; 
+    
                     const clientHistoryMatch = !selectedClientHistory || job.clientHistory === selectedClientHistory;
                     const workTypeMatch = !selectedWorkType || job.workType === selectedWorkType;
-
-
-                    return categoryMatch && typeMatch && experienceMatch && budgetMatch && proposalsMatch && clientHistoryMatch && workTypeMatch;
+    
+                    return categoryMatch && typeMatch && experienceMatch && salaryMatch &&
+                        proposalsMatch && clientHistoryMatch && workTypeMatch;
                 });
-
+    
                 if (selectedSort === 'newest') {
-                    filteredJobs.sort((a, b) => new Date(b.posted) - new Date(a.posted));
+                    filtered.sort((a, b) => new Date(b.posted) - new Date(a.posted));
                 } else if (selectedSort === 'oldest') {
-                    filteredJobs.sort((a, b) => new Date(a.posted) - new Date(b.posted));
+                    filtered.sort((a, b) => new Date(a.posted) - new Date(b.posted));
                 }
-
+    
                 jobListingsContainer.innerHTML = '';
-                if (filteredJobs.length === 0) {
+                if (filtered.length === 0) {
                     noResultsMessage.style.display = 'block';
                 } else {
                     noResultsMessage.style.display = 'none';
-                    filteredJobs.forEach(job => {
+                    filtered.forEach(job => {
                         const card = createJobCard(job);
                         jobListingsContainer.appendChild(card);
                     });
                 }
             }
-
+    
+            
+            categoryCheckboxes.forEach(cb => cb.addEventListener('change', () => {
+                cb.checked ? selectedCategories.add(cb.value) : selectedCategories.delete(cb.value);
+                displayJobs();
+            }));
+            jobTypeCheckboxes.forEach(cb => cb.addEventListener('change', () => {
+                cb.checked ? selectedTypes.add(cb.value) : selectedTypes.delete(cb.value);
+                displayJobs();
+            }));
+            proposalsCheckboxes.forEach(cb => cb.addEventListener('change', () => {
+                cb.checked ? selectedProposals.add(cb.value) : selectedProposals.delete(cb.value);
+                displayJobs();
+            }));
+            clientHistoryRadios.forEach(r => r.addEventListener('change', () => {
+                selectedClientHistory = r.value;
+                displayJobs();
+            }));
+            workTypeRadios.forEach(r => r.addEventListener('change', () => {
+                selectedWorkType = r.value;
+                displayJobs();
+            }));
+            categorySearchInput.addEventListener('input', () => {
+                const term = categorySearchInput.value.toLowerCase();
+                document.querySelectorAll('.category-checkbox-group label').forEach(label => {
+                    const category = label.textContent.toLowerCase();
+                    const checkbox = label.querySelector('input');
+                    const visible = category.includes(term);
+                    label.style.display = visible ? 'block' : 'none';
+                    checkbox.style.display = visible ? 'inline-block' : 'none';
+                });
+            });
+            sortBySelect.addEventListener('change', displayJobs);
+            experienceFilter.addEventListener('change', displayJobs);
+            minBudgetInput.addEventListener('input', displayJobs);
+            maxBudgetInput.addEventListener('input', displayJobs);
+    
             displayJobs();
         });
     </script>
+
+    <script>
+        document.querySelectorAll('.toggle-filter').forEach(title => {
+            title.addEventListener('click', () => {
+                const group = title.closest('.filter-group');
+                group.classList.toggle('active');
+            });
+        });
+    </script>
+    
 </body>
 </html>
