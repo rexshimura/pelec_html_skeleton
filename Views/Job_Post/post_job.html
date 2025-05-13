@@ -169,7 +169,7 @@
             <p class="lead">Fill out the form below to create a job posting.</p>
         </section>
 
-        <form class="job-post-form">
+        <form class="job-post-form" id="postJobForm">
             <div class="mb-3">
                 <label for="title" class="form-label required-label">Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Enter job title" required>
@@ -222,9 +222,7 @@
                     <label for="jobScope" class="form-label required-label">Job Scope</label>
                     <select class="form-select" id="jobScope" required>
                         <option value="" disabled selected>Select job scope</option>
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
+                         <option value="scope">N/A</option>
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -250,6 +248,7 @@
             const findWorkDropdown = document.getElementById('findWorkDropdown');
             const deliverWorkDropdown = document.getElementById('deliverWorkDropdown');
             const navbarNavItems = document.querySelectorAll('.navbar-nav .nav-item');
+            const postJobForm = document.getElementById('postJobForm');
 
             if (findWorkDropdown && deliverWorkDropdown) {
                 // Remove the original event listeners for "Find Work" and "Deliver Work"
@@ -262,6 +261,59 @@
             if (findWorkNavItem) {
                 findWorkNavItem.classList.add('active');
             }
+
+            // Handle form submission
+            postJobForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Get form values (you can add validation here)
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+                const jobType = document.getElementById('jobType').value;
+                const jobRole = document.getElementById('jobRole').value;
+                const expLevel = document.getElementById('expLevel').value;
+                const engLevel = document.getElementById('engLevel').value;
+                const jobScope = document.getElementById('jobScope').value;
+                const noOfHires = document.getElementById('noOfHires').value;
+
+                // For now, we'll just redirect to the view_post.html
+                window.location.href = '/Views/FInd_Work/my_job_posts.html';
+                
+                // In a real application, you would send this data to a server
+                // using fetch or AJAX.  For example:
+                /*
+                fetch('/api/post-job', {  //  <-  Replace with your API endpoint
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        jobType,
+                        jobRole,
+                        expLevel,
+                        engLevel,
+                        jobScope,
+                        noOfHires
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Redirect to the view post page on success
+                        window.location.href = '/Views/Job_Post/view_post.html';
+                    } else {
+                        // Handle errors (e.g., display a message to the user)
+                        console.error('Failed to post job:', response);
+                        alert('Failed to post job. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error posting job:', error);
+                    alert('An error occurred. Please try again.');
+                });
+                */
+            });
         });
     </script>
 </body>

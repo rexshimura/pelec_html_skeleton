@@ -144,17 +144,66 @@
             font-size: 0.8rem;
             font-weight: 500;
             color: #fff;
-            background-color: #547aaa; /* Yellow for In Progress */
+            background-color: #547aaa;
             color: #d6d9dc;
             margin-bottom: 0.5rem;
         }
         .job-details-label {
-            font-weight: normal;
-            color: #868686;
-            margin-right: 0.25rem;
+          font-weight: normal;
+          color: #868686;
+          margin-right: 0.25rem;
         }
         .pt{
             margin-top: 2rem;
+        }
+        .job-title {
+            font-size: 1.1rem;
+            color: #34495e;
+            margin-bottom: 0.5rem;
+        }
+        .job-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .job-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .job-summary {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .verified-icon {
+            /* Style for a verified icon, you can use a library like Font Awesome */
+            color: green; /* Example: green checkmark */
+        }
+
+        .star-icon {
+            /* Style for a star icon */
+            color: #f9a825;   /* Example: a shade of yellow */
+        }
+
+        .tag {
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            margin-right: 0.5rem;
+            font-size: 0.75rem;
+        }
+        .view-more-button {
+            margin-top: 1rem;
         }
 
     </style>
@@ -191,7 +240,7 @@
                         </li>
                         <li class="nav-item">
                             <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search for services" aria-label="Search">
+                                <input class="form-control me-2" type="search" placeholder="Search for jobs" aria-label="Search">
                                 <a href="/Views/Search/searched_result.html"><button class="btn btn-primary" type="button" id="button-addon2">Search</button></a>
                             </form>
                         </li>
@@ -217,19 +266,26 @@
         </section>
 
         <section class="mb-4 text-center">
-            <a href="/Views/Job_Post/post_job.html" class="btn btn-outline-primary">+ Post a job</a>
+            <a href="/Views/Job_Post/post_job.html" class="btn btn-primary"><b>+ Post a job</b></a>
         </section>
 
         <section class="job-post-section">
             <h3 class="job-main-title">Your Job Posts</h3>
-            <p class="job-post-count">Number of job posts: 1</p>
+            <p class="job-post-count">Number of job posts: <span id="job-post-count">1</span></p>
             <div id="job-posts-list">
                 <div class="job-post-card">
-                    <span class="job-tag" id="jobtype">Hourly</span> <span class="job-tag" id="jobrole">Developer</span>
-                    <h5>TITLE NI DIRI</h5>
-                    <h4 class="job-post-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
-                    <p><span class="job-details-label">Started:</span> Jan 16, 2025</p>
-                    <a href="/Views/Job_Post/view_post.html" class="btn btn-primary pt">See Job Post</a>
+                    <h3 class="job-title">Software Engineer</h3>
+                    <div class="job-summary">
+                        Posted By: Edmark Talingting
+                    </div>
+                    <div class="job-summary">
+                         Tags: <span class="tag">Hourly</span><span class="tag">Developer</span>
+                    </div>
+                    <p class="job-description">Seeking a skilled Software Engineer to build and maintain web applications.</p>
+                    <div class="job-details">
+                        Posted: 2 days ago
+                    </div>
+                    <a href="/Views/Job_Post/view_mypost.html" class="btn btn-primary view-more-button">See Job Post</a>
                 </div>
             </div>
         </section>
@@ -248,6 +304,9 @@
             const findWorkDropdown = document.getElementById('findWorkDropdown');
             const deliverWorkDropdown = document.getElementById('deliverWorkDropdown');
             const navbarNavItems = document.querySelectorAll('.navbar-nav .nav-item');
+            const jobPostCount = document.getElementById('job-post-count');
+            const postTime = document.getElementById('post-time');
+
 
             if (findWorkDropdown && deliverWorkDropdown) {
                 // Remove the original event listeners for "Find Work" and "Deliver Work"
@@ -259,6 +318,57 @@
             const findWorkNavItem = Array.from(navbarNavItems).find(navItem => navItem.querySelector('#findWorkDropdown'));
             if (findWorkNavItem) {
                 findWorkNavItem.classList.add('active');
+            }
+
+            // Mock job data (Improved for demonstration)
+            const mockJobData = {
+                title: "Software Engineer",
+                description: "Seeking a skilled Software Engineer to build and maintain web applications.",
+                postedDate: new Date(Date.now() - 48 * 60 * 60 * 1000), // Example: 2 days ago
+                jobType: "Hourly",
+                jobRole: "Developer",
+                postedBy: "Edmark Talingting" //Added Posted By
+            };
+
+            // Update card with mock data
+            const jobPostCard = document.querySelector('.job-post-card');
+            jobPostCard.querySelector('.job-title').textContent = mockJobData.title;
+            jobPostCard.querySelector('.job-description').textContent = mockJobData.description;
+            jobPostCard.querySelector('.job-summary').textContent = `Posted By: ${mockJobData.postedBy}`; //Added Posted By
+            jobPostCard.querySelectorAll('.tag')[0].textContent = mockJobData.jobType;
+            jobPostCard.querySelectorAll('.tag')[1].textContent = mockJobData.jobRole;
+
+            // Calculate and display "posted time ago"
+            const timeAgoString = getTimeAgoString(mockJobData.postedDate);
+            jobPostCard.querySelector('.job-details').textContent = `Posted: ${timeAgoString}`;
+
+
+            function getTimeAgoString(date) {
+                const now = new Date();
+                const diff = now.getTime() - date.getTime();
+
+                const seconds = Math.floor(diff / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const hours = Math.floor(minutes / 60);
+                const days = Math.floor(hours / 24);
+                const weeks = Math.floor(days / 7);
+                const months = Math.floor(days / 30);
+                const years = Math.floor(days / 365);
+
+                if (years > 1) return `${years} years ago`;
+                if (years === 1) return `1 year ago`;
+                if (months > 1) return `${months} months ago`;
+                if (months === 1) return `1 month ago`;
+                if (weeks > 1) return `${weeks} weeks ago`;
+                if (weeks === 1) return `1 week ago`;
+                if (days > 1) return `${days} days ago`;
+                if (days === 1) return `1 day ago`;
+                if (hours > 1) return `${hours} hours ago`;
+                if (hours === 1) return `1 hour ago`;
+                if (minutes > 1) return `${minutes} minutes ago`;
+                if (minutes === 1) return `1 minute ago`;
+                if (seconds > 1) return `${seconds} seconds ago`;
+                return `Just now`;
             }
         });
     </script>

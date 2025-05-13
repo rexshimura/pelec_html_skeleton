@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - INHIRE</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .nav-link {
+            color: #555;
+            margin-right: 1rem;
+        }
+        .nav-link:hover {
+            color: #007bff;
+        }
+        .nav-item.active .nav-link {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #e0e0e0;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+        .section-sub {
+            font-size: 1.2rem;
+            font-weight: normal;
+            color: #2c3e50;
+            margin-bottom: 1.9rem;
+        }
+        .job-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .job-title {
+            font-size: 1.1rem;
+            color: #34495e;
+            margin-bottom: 0.5rem;
+        }
+        .job-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .job-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+        .filter-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 1rem;
+        }
+        .form-select {
+            border-radius: 0.5rem;
+            border: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+        .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        .job-summary {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .job-summary i {
+            margin-right: 0.25rem;
+        }
+        .verified-icon {
+            color: green;
+        }
+        .star-icon {
+            color: #f9a825;
+        }
+        .tag {
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            margin-right: 0.5rem;
+            font-size: 0.75rem;
+        }
+        .view-more-button {
+            margin-top: 1rem;
+        }
+        .category-search-input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+        }
+        .category-checkbox-group {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+        }
+        .category-checkbox-group label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+        .money-range-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .money-range-input-group input {
+            width: 100%;
+        }
+        .proposals-checkbox-group label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+        .client-history-radio-group label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+        .type-of-work-radio-group label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white py-3 border-bottom">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#">INHIRE</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="findWorkDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Find Work
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="findWorkDropdown">
+                                   <li><a class="dropdown-item " href="/Views/Find_Work/home.html">Find Work</a></li>
+                                <li><a class="dropdown-item" href="/Views/Find_Work/my_proposals.html">My Proposals</a></li>
+                                <li><a class="dropdown-item" href="/Views/Find_Work/my_job_posts.html">My Job Posts</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="deliverWorkDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Deliver Work
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="deliverWorkDropdown">
+                                <li><a class="dropdown-item" href="/Views/Deliver_Work/active_contracts.html">Your Active Contracts</a></li>
+                                <li><a class="dropdown-item" href="/Views/Deliver_Work/contract_history.html">Contract History</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Search for jobs" aria-label="Search">
+                                <a href="/Views/Search/searched_result.html"><button class="btn btn-primary" type="button" id="button-addon2">Search</button></a>
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link size" href="/Views/Profile/profile.html">
+                                <div class="user-info">
+                                    <img src="/icons/icon_profile.png" alt="User Avatar" class="avatar">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <section class="mb-4">
+            <h1 class="section-title">Search Results</h1>
+            <span class="section-sub">for:</span><span> "pogi"</span>
+        </section>
+
+        <section class="mb-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <h2 class="filter-title">Sort By</h2>
+                        <div class="mb-3">
+                            <select id="sortBy" class="form-select">
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h2 class="filter-title">Category</h2>
+                        <input type="text" id="categorySearch" class="category-search-input" placeholder="Search category">
+                        <div class="category-checkbox-group" id="categoryCheckboxes">
+                            <label><input type="checkbox" value="development" name="category"> Development</label>
+                            <label><input type="checkbox" value="design" name="category"> Design</label>
+                            <label><input type="checkbox" value="writing" name="category"> Writing</label>
+                            <label><input type="checkbox" value="marketing" name="category"> Marketing</label>
+                             <label><input type="checkbox" value="data analysis" name="category"> Data Analysis</label>
+                            <label><input type="checkbox" value="management" name="category"> Management</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h2 class="filter-title">Job Type</h2>
+                        <div class="money-range-input-group">
+                            <input type="number" id="minBudget" class="form-control" placeholder="Min Budget">
+                            <input type="number" id="maxBudget" class="form-control" placeholder="Max Budget">
+                        </div>
+                        <div class="mb-3" id="jobTypeCheckboxes">
+                            <label><input type="checkbox" value="hourly" name="type"> Hourly</label>
+                            <label><input type="checkbox" value="fixed" name="type"> Fixed Price</label>
+                            <label><input type="checkbox" value="fulltime" name="type"> Full-Time</label>
+                            <label><input type="checkbox" value="contract" name="type"> Contract</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h2 class="filter-title">Experience Level</h2>
+                        <div class="mb-3">
+                            <select id="experienceFilter" class="form-select">
+                                <option value="">All Levels</option>
+                                <option value="entry">Entry Level</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="expert">Expert</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h2 class="filter-title">Number of Proposals</h2>
+                        <div class="proposals-checkbox-group" id="proposalsCheckboxes">
+                            <label><input type="checkbox" value="lessThan5" name="proposals"> Less than 5</label>
+                            <label><input type="checkbox" value="5to10" name="proposals"> 5 - 10</label>
+                            <label><input type="checkbox" value="10to15" name="proposals"> 10 - 15</label>
+                            <label><input type="checkbox" value="15to20" name="proposals"> 15 - 20</label>
+                            <label><input type="checkbox" value="20to50" name="proposals"> 20 - 50</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h2 class="filter-title">Client Info</h2>
+                        <div class="mb-3" id="clientInfoCheckboxes">
+                            <label><input type="checkbox" value="previousClients" name="clientInfo"> My Previous Clients</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h2 class="filter-title">Client History</h2>
+                        <div class="client-history-radio-group" id="clientHistoryRadios">
+                            <label><input type="radio" value="noHires" name="clientHistory"> No Hires</label>
+                            <label><input type="radio" value="1to9Hires" name="clientHistory"> 1 - 9 Hires</label>
+                            <label><input type="radio" value="10PlusHires" name="clientHistory"> 10+ Hires</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h2 class="filter-title">Type of Work</h2>
+                        <div class="type-of-work-radio-group" id="workTypeRadios">
+                            <label><input type="radio" value="" name="workType" checked> Any Type of Work</label>
+                            <label><input type="radio" value="developmentIT" name="workType"> Development IT</label>
+                            <label><input type="radio" value="designCreative" name="workType"> Design & Creative</label>
+                            <label><input type="radio" value="financeAccounting" name="workType"> Finance & Accounting</label>
+                            <label><input type="radio" value="adminCustomerSupport" name="workType"> Admin & Customer Support</label>
+                            <label><input type="radio" value="engineeringArchitecture" name="workType"> Engineering & Architecture</label>
+                            <label><input type="radio" value="legal" name="workType"> Legal</label>
+                            <label><input type="radio" value="salesMarketing" name="workType"> Sales & Marketing</label>
+                            <label><input type="radio" value="writingTranslation" name="workType"> Writing & Translation</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-9" id="job-listings-container">
+                </div>
+            </div>
+            <div id="no-results" style="display: none; text-align: center; margin-top: 20px;">
+                <p class="lead">No jobs found matching your search criteria.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-light py-3 border-top">
+        <div class="container text-center">
+            <p>&copy; 2025 INHIRE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+    <script>
+        const jobData = [
+            {
+                title: 'Software Engineer',
+                postedBy: 'Edmark Talingting',
+                tags: ['Hourly', 'Developer'],
+                description: 'Seeking a skilled Software Engineer to build and maintain web applications.',
+                posted: '2 days ago',
+                category: 'development',
+                type: 'hourly',
+                experience: 'intermediate',
+                budget: 2500,
+                proposals: 8,
+                clientHistory: '1to9Hires',
+                workType: 'developmentIT'
+            },
+            {
+                title: 'Graphic Designer',
+                postedBy: 'Jane Smith',
+                tags: ['Fixed Price', 'Creative'],
+                description: 'We need a creative graphic designer to design a new logo and marketing materials.',
+                posted: '1 week ago',
+                category: 'design',
+                type: 'fixed',
+                experience: 'entry',
+                 budget: 1500,
+                proposals: 3,
+                clientHistory: 'noHires',
+                workType: 'designCreative'
+            },
+            {
+                title: 'Data Analyst',
+                postedBy: 'John Doe',
+                tags: ['Full-time', 'Data Analysis', 'SQL'],
+                description: 'Analyze sales data and create reports to improve business decisions.  Experience with SQL and Python required.',
+                posted: '1 day ago',
+                category: 'data analysis',
+                type: 'fulltime',
+                experience: 'expert',
+                 budget: 4000,
+                proposals: 12,
+                 clientHistory: '10PlusHires',
+                  workType: 'financeAccounting'
+            },
+            {
+                title: 'Full Stack Developer',
+                postedBy: 'Alice Johnson',
+                tags: ['Contract', 'React', 'Node.js'],
+                description: 'Looking for a full stack developer for a long term project.',
+                posted: '2 days ago',
+                category: 'development',
+                type: 'contract',
+                experience: 'intermediate',
+                 budget: 3000,
+                proposals: 6,
+                 clientHistory: '1to9Hires',
+                  workType: 'developmentIT'
+            },
+            {
+                title: 'Project Manager',
+                postedBy: 'Samantha White',
+                tags: ['Full-time', 'Agile', 'Project Management'],
+                description: 'Manage the development and launch of a new mobile application.  Agile experience is a plus.',
+                posted: '5 days ago',
+                category: 'management',
+                type: 'fulltime',
+                experience: 'expert',
+                 budget: 5000,
+                proposals: 18,
+                clientHistory: '10PlusHires',
+                workType: 'management'
+            },
+            {
+                title: 'Technical Writer',
+                postedBy: 'Robert Brown',
+                tags: ['Hourly', 'Technical Writing'],
+                description: 'We are looking for a technical writer to create documentation.',
+                posted: '1 week ago',
+                category: 'writing',
+                type: 'hourly',
+                experience: 'intermediate',
+                 budget: 2000,
+                proposals: 2,
+                clientHistory: 'noHires',
+                workType: 'writingTranslation'
+            },
+             {
+                title: 'Web Designer',
+                postedBy: 'Emily Green',
+                tags: ['Contract', 'UI/UX', 'Design'],
+                description: 'Need a talented web designer to create stunning user interfaces.',
+                posted: '3 days ago',
+                category: 'design',
+                type: 'contract',
+                experience: 'intermediate',
+                budget: 2700,
+                proposals: 9,
+                clientHistory: '1to9Hires',
+                workType: 'designCreative'
+            },
+            {
+                title: 'Marketing Specialist',
+                postedBy: 'Michael Clark',
+                tags: ['Full-time', 'Digital Marketing', 'SEO'],
+                description: 'Seeking a marketing specialist to develop and execute digital marketing strategies.',
+                posted: '4 days ago',
+                category: 'marketing',
+                type: 'fulltime',
+                experience: 'entry',
+                budget: 3200,
+                proposals: 14,
+                clientHistory: '10PlusHires',
+                workType: 'salesMarketing'
+            },
+            {
+                title: 'Financial Analyst',
+                postedBy: 'Jessica Davis',
+                tags: ['Hourly', 'Finance', 'Analysis'],
+                description: 'Looking for a financial analyst to provide insights and support financial planning.',
+                posted: '6 days ago',
+                category: 'finance',
+                type: 'hourly',
+                experience: 'expert',
+                budget: 3800,
+                proposals: 25,
+                clientHistory: '10PlusHires',
+                workType: 'financeAccounting'
+            },
+            {
+                title: 'Customer Support Representative',
+                postedBy: 'David Wilson',
+                tags: ['Full-time', 'Customer Service', 'Support'],
+                description: 'We are hiring customer support representatives to assist our clients.',
+                posted: '1 week ago',
+                category: 'customer support',
+                type: 'fulltime',
+                experience: 'entry',
+                budget: 2200,
+                proposals: 4,
+                clientHistory: 'noHires',
+                workType: 'adminCustomerSupport'
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sortBySelect = document.getElementById('sortBy');
+            const categorySearchInput = document.getElementById('categorySearch');
+            const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
+            const jobTypeCheckboxes = document.querySelectorAll('input[name="type"]');
+            const experienceFilter = document.getElementById('experienceFilter');
+            const jobListingsContainer = document.getElementById('job-listings-container');
+            const noResultsMessage = document.getElementById('no-results');
+            const minBudgetInput = document.getElementById('minBudget');
+            const maxBudgetInput = document.getElementById('maxBudget');
+            const proposalsCheckboxes = document.querySelectorAll('input[name="proposals"]');
+            const clientInfoCheckboxes = document.querySelectorAll('input[name="clientInfo"]');
+            const clientHistoryRadios = document.querySelectorAll('input[name="clientHistory"]');
+             const workTypeRadios = document.querySelectorAll('input[name="workType"]');
+
+
+            let filteredJobs = [...jobData];
+            let selectedCategories = new Set();
+            let selectedTypes = new Set();
+            let selectedProposals = new Set();
+            let selectedClientInfo = new Set();
+            let selectedClientHistory = '';
+            let selectedWorkType = '';
+
+
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    if (event.target.checked) {
+                        selectedCategories.add(event.target.value);
+                    } else {
+                        selectedCategories.delete(event.target.value);
+                    }
+                    displayJobs();
+                });
+            });
+
+            jobTypeCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    if (event.target.checked) {
+                        selectedTypes.add(event.target.value);
+                    } else {
+                        selectedTypes.delete(event.target.value);
+                    }
+                    displayJobs();
+                });
+            });
+
+            proposalsCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    if (event.target.checked) {
+                        selectedProposals.add(event.target.value);
+                    } else {
+                        selectedProposals.delete(event.target.value);
+                    }
+                    displayJobs();
+                });
+            });
+
+            clientInfoCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    if (event.target.checked) {
+                        selectedClientInfo.add(event.target.value);
+                    } else {
+                        selectedClientInfo.delete(event.target.value);
+                    }
+                    displayJobs();
+                });
+            });
+
+            clientHistoryRadios.forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    selectedClientHistory = event.target.value;displayJobs();
+                });
+            });
+            
+            workTypeRadios.forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    selectedWorkType = event.target.value;
+                    displayJobs();
+                });
+            });
+
+
+            categorySearchInput.addEventListener('input', () => {
+                const searchTerm = categorySearchInput.value.toLowerCase();
+                const categoryLabels = document.querySelectorAll('.category-checkbox-group label');
+                categoryLabels.forEach(label => {
+                    const categoryName = label.textContent.toLowerCase();
+                    const checkbox = label.querySelector('input');
+                    if (categoryName.includes(searchTerm)) {
+                        label.style.display = 'block';
+                        checkbox.style.display = 'inline-block';
+                    } else {
+                        label.style.display = 'none';
+                        checkbox.style.display = 'none';
+                    }
+                });
+            });
+
+            sortBySelect.addEventListener('change', displayJobs);
+            experienceFilter.addEventListener('change', displayJobs);
+            minBudgetInput.addEventListener('input', displayJobs);
+            maxBudgetInput.addEventListener('input', displayJobs);
+
+
+            function createJobCard(job) {
+                const card = document.createElement('div');
+                card.className = 'job-card';
+
+                card.innerHTML = `
+                    <h3 class="job-title">${job.title}</h3>
+                    <div class="job-summary">
+                        Posted By: ${job.postedBy}
+                    </div>
+                    <div class="job-summary">
+                        Tags: ${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <p class="job-description">${job.description}</p>
+                    <div class="job-details">
+                        Posted: ${job.posted}
+                    </div>
+                    <a href="/Views/Job_Post/view_otherpost.html"><button class="btn btn-primary view-more-button">View More</button></a>
+                `;
+
+                return card;
+            }
+
+            function displayJobs() {
+                const selectedSort = sortBySelect.value;
+                const selectedExperience = experienceFilter.value;
+                const minBudget = minBudgetInput.value ? parseFloat(minBudgetInput.value) : 0;
+                const maxBudget = maxBudgetInput.value ? parseFloat(maxBudgetInput.value) : Infinity;
+
+
+                filteredJobs = jobData.filter(job => {
+                    const categoryMatch = selectedCategories.size === 0 || selectedCategories.has(job.category);
+                    const typeMatch = selectedTypes.size === 0 || selectedTypes.has(job.type);
+                    const experienceMatch = !selectedExperience || job.experience === selectedExperience;
+                    const budgetMatch = job.budget >= minBudget && job.budget <= maxBudget;
+                    
+                    const proposalsMatch = selectedProposals.size === 0 ||
+                        (selectedProposals.has('lessThan5') && job.proposals < 5) ||
+                        (selectedProposals.has('5to10') && job.proposals >= 5 && job.proposals <= 10) ||
+                        (selectedProposals.has('10to15') && job.proposals >= 10 && job.proposals <= 15) ||
+                        (selectedProposals.has('15to20') && job.proposals >= 15 && job.proposals <= 20) ||
+                        (selectedProposals.has('20to50') && job.proposals >= 20 && job.proposals <= 50);
+
+                    const clientInfoMatch = selectedClientInfo.size === 0; 
+                    const clientHistoryMatch = !selectedClientHistory || job.clientHistory === selectedClientHistory;
+                    const workTypeMatch = !selectedWorkType || job.workType === selectedWorkType;
+
+
+                    return categoryMatch && typeMatch && experienceMatch && budgetMatch && proposalsMatch && clientHistoryMatch && workTypeMatch;
+                });
+
+                if (selectedSort === 'newest') {
+                    filteredJobs.sort((a, b) => new Date(b.posted) - new Date(a.posted));
+                } else if (selectedSort === 'oldest') {
+                    filteredJobs.sort((a, b) => new Date(a.posted) - new Date(b.posted));
+                }
+
+                jobListingsContainer.innerHTML = '';
+                if (filteredJobs.length === 0) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                    filteredJobs.forEach(job => {
+                        const card = createJobCard(job);
+                        jobListingsContainer.appendChild(card);
+                    });
+                }
+            }
+
+            displayJobs();
+        });
+    </script>
+</body>
+</html>

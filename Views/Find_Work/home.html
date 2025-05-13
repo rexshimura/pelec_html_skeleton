@@ -63,6 +63,12 @@
             color: #2c3e50;
             margin-bottom: 1.5rem;
         }
+        .section-username {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #488fd7;
+            margin-bottom: 1.5rem;
+        }
         .job-card {
             background-color: #fff;
             border: 1px solid #e0e0e0;
@@ -141,6 +147,9 @@
             margin-right: 0.5rem;
             font-size: 0.75rem;
         }
+        .view-more-button {
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -175,17 +184,12 @@
                         </li>
                         <li class="nav-item">
                             <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search for services" aria-label="Search">
+                                <input class="form-control me-2" type="search" placeholder="Search for jobs" aria-label="Search">
                                 <a href="/Views/Search/searched_result.html"><button class="btn btn-primary" type="button" id="button-addon2">Search</button></a>
                             </form>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-bell"></i>
-                            </a>
-                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link size" href="/Views/Profile/profile.html">
                                 <div class="user-info">
@@ -203,11 +207,8 @@
     <main class="container py-4">
         <section class="mb-4">
             <h2 class="section-title">Welcome to INHIRE!</h2>
+            <h2 class="section-username" >Jodeci Pogi</h2>
             <p class="lead">Connect with talented freelancers and find the perfect job for your skills.</p>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search for jobs..." aria-label="Search for jobs" aria-describedby="button-addon2">
-                <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
-            </div>
         </section>
 
         <section class="mb-4">
@@ -238,80 +239,50 @@
         const jobData = {
             'best-matches': [
                 {
-                    title: 'English into Ewe proofreading job',
-                    summary: [
-                        { icon: 'fas fa-dollar-sign', text: 'Hourly: $15-$30' },
-                        { icon: 'far fa-calendar-alt', text: '1 Month' },
-                        { icon: 'far fa-clock', text: '< 30 hr/wk' },
-                        { text: 'Intermediate' },
-                    ],
-                    proposals: '5 to 10',
-                    clientDetails: [
-                        { icon: 'fas fa-check-circle', text: 'Payment Verified', isVerified: true },
-                        { icon: 'fas fa-star', text: '4.9', isStar: true },
-                        { text: '$200K+ Spent' },
-                        { text: 'United States' },
-                    ],
-                    description: 'I have -1800 words to review from English into Ewe in Word format. TAT for 48 hours would be fine. Payable: 2 (two) hours. Apply with your best hourly rate this job.',
-                    tags: ['English', 'Proofreading', 'Ewe'],
-                    posted: '22 hours ago',
+                    title: 'Software Engineer',
+                    postedBy: 'Edmark Talingting',
+                    tags: ['Hourly', 'Developer'],
+                    description: 'Seeking a skilled Software Engineer to build and maintain web applications.',
+                    posted: '2 days ago',
                 },
                 {
                     title: 'Graphic Designer',
+                    postedBy: 'Jane Smith',
+                    tags: ['Fixed Price', 'Creative'],
                     description: 'We need a creative graphic designer to design a new logo and marketing materials.',
-                    details: { posted: '1 week ago', budget: '$500 - $1000' },
+                    posted: '1 week ago',
                 },
             ],
             'most-recent': [
                 {
                     title: 'Data Analyst',
-                    summary: [
-                        { icon: 'fas fa-dollar-sign', text: 'Fixed: $2000-$3000' },
-                        { icon: 'far fa-calendar-alt', text: '2 Weeks' },
-                        { icon: 'far fa-clock', text: '40 hr/wk' },
-                        { text: 'Expert' },
-                    ],
-                    proposals: '10-15',
-                    clientDetails: [
-                        { icon: 'fas fa-check-circle', text: 'Payment Verified', isVerified: true },
-                        { icon: 'fas fa-star', text: '4.8', isStar: true },
-                        { text: '$100K+ Spent' },
-                        { text: 'Canada' },
-                    ],
+                    postedBy: 'John Doe',
+                    tags: ['Full-time', 'Data Analysis', 'SQL'],
                     description: 'Analyze sales data and create reports to improve business decisions.  Experience with SQL and Python required.',
-                    tags: ['Data Analysis', 'SQL', 'Python'],
                     posted: '1 day ago',
                 },
                 {
                     title: 'Full Stack Developer',
+                    postedBy: 'Alice Johnson',
+                    tags: ['Contract', 'React', 'Node.js'],
                     description: 'Looking for a full stack developer for a long term project.',
-                    details: { posted: '2 days ago', budget: '$60-$80/hr' },
+                    posted: '2 days ago',
                 },
             ],
             'saved-jobs': [
-                {
+                 {
                     title: 'Project Manager',
-                    summary: [
-                        { icon: 'fas fa-dollar-sign', text: 'Monthly: $5000-$7000' },
-                        { icon: 'far fa-calendar-alt', text: '3 Months' },
-                        { icon: 'far fa-clock', text: '40 hr/wk' },
-                        { text: 'Intermediate' },
-                    ],
-                    proposals: '20-30',
-                    clientDetails: [
-                        { icon: 'fas fa-check-circle', text: 'Payment Verified', isVerified: true },
-                        { icon: 'fas fa-star', text: '4.5', isStar: true },
-                        { text: '$50K+ Spent' },
-                        { text: 'United Kingdom' },
-                    ],
+                    postedBy: 'Samantha White',
+                    tags: ['Full-time', 'Agile', 'Project Management'],
                     description: 'Manage the development and launch of a new mobile application.  Agile experience is a plus.',
-                    tags: ['Project Management', 'Agile', 'Mobile Development'],
                     posted: '5 days ago',
                 },
                 {
                     title: 'Technical Writer',
+                    postedBy: 'Robert Brown',
+                    tags: ['Hourly', 'Technical Writing'],
                     description: 'We are looking for a technical writer to create documentation.',
-                    details: { posted: '1 week ago', budget: '$30-$50/hr' },
+                    posted: '1 week ago',
                 },
             ],
         };
@@ -336,121 +307,24 @@
                 findWorkNavItem.classList.add('active');
             }
 
-            const jobCardConfig = {
-                title: { tag: 'h3', className: 'job-title', textKey: 'title' },
-                summary: {
-                    tag: 'div', className: 'job-summary', items: [
-                        { tag: 'span', icon: 'fas fa-dollar-sign', textKey: 'text' },
-                        { tag: 'span', icon: 'far fa-calendar-alt', textKey: 'text' },
-                        { tag: 'span', icon: 'far fa-clock', textKey: 'text' },
-                        { tag: 'span', textKey: 'text' },
-                    ],
-                    dataKey: 'summary'
-                },
-                proposals: {
-                    tag: 'div', className: 'job-summary',
-                    items: [{
-                        tag: 'span', html: (data) => `<i class="fas fa-users"></i> Proposals: ${data}`,
-                        textKey: 'proposals'
-                    }]
-                },
-                clientDetails: {
-                    tag: 'div', className: 'job-summary', items: [
-                        { tag: 'span', icon: 'fas fa-check-circle', textKey: 'text', isVerified: true },
-                        { tag: 'span', icon: 'fas fa-star', textKey: 'text', isStar: true },
-                        { tag: 'span', textKey: 'text' },
-                        { tag: 'span', textKey: 'text' },
-                    ],
-                    dataKey: 'clientDetails'
-                },
-                description: { tag: 'p', className: 'job-description', textKey: 'description' },
-                tags: {
-                    tag: 'div', className: 'tags-container', items: [{
-                        tag: 'span', className: 'tag', textKey: 'tag'
-                    }],
-                    dataKey: 'tags'
-                },
-                details: {
-                    tag: 'div', className: 'job-details',
-                    html: (data) => {
-                        if (data.details) {
-                            return `<span>${data.details.posted}</span><span>${data.details.budget}</span>`;
-                        } else if (data.posted) {
-                            return `<span>Posted ${data.posted}</span>`;
-                        }
-                        return '';
-                    },
-                    dataKey: 'details'
-                }
-            };
-
             function createJobCard(job) {
                 const card = document.createElement('div');
                 card.className = 'job-card';
 
-                for (const key in jobCardConfig) {
-                    const config = jobCardConfig[key];
-                    let element;
-
-                    if (config.tag) {
-                        element = document.createElement(config.tag);
-                        if (config.className) {
-                            element.className = config.className;
-                        }
-                    }
-
-                    if (config.textKey) {
-                        element.textContent = job[config.textKey] || '';
-                    }
-
-                    if (config.html) {
-                        element.innerHTML = config.html(job);
-                    }
-                    if(config.items && config.dataKey){
-                        const data = job[config.dataKey]
-                        if(data){
-                            data.forEach(itemData =>{
-                                const itemElement = document.createElement(itemData.tag || 'span');
-                                if(itemData.className){
-                                    itemElement.className = itemData.className
-                                }
-                                if (itemData.icon) {
-                                    const icon = document.createElement('i');
-                                    icon.className = itemData.icon;
-                                    if(itemData.isVerified){
-                                        icon.classList.add('verified-icon')
-                                    }
-                                    if(itemData.isStar){
-                                        icon.classList.add('star-icon')
-                                    }
-                                    itemElement.appendChild(icon);
-                                }
-                                itemElement.textContent = itemData.text || itemData.tag;
-                                element.appendChild(itemElement)
-                            })
-                        }
-                    }
-                    else if(config.items && !config.dataKey){
-                         config.items.forEach(itemData => {
-                            const itemElement = document.createElement(itemData.tag || 'span');
-                            if (itemData.icon) {
-                                const icon = document.createElement('i');
-                                icon.className = itemData.icon;
-                                 if(itemData.isVerified){
-                                        icon.classList.add('verified-icon')
-                                    }
-                                    if(itemData.isStar){
-                                        icon.classList.add('star-icon')
-                                    }
-                                itemElement.appendChild(icon);
-                            }
-                            itemElement.textContent = job[itemData.textKey] || itemData.tag;
-                            element.appendChild(itemElement);
-                        });
-                    }
-
-                    card.appendChild(element);
-                }
+                card.innerHTML = `
+                    <h3 class="job-title">${job.title}</h3>
+                    <div class="job-summary">
+                        Posted By: ${job.postedBy}
+                    </div>
+                    <div class="job-summary">
+                        Tags: ${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <p class="job-description">${job.description}</p>
+                    <div class="job-details">
+                        Posted: ${job.posted}
+                    </div>
+                    <button class="btn btn-primary view-more-button">View More</button>
+                `;
 
                 return card;
             }
